@@ -105,6 +105,11 @@ button{
     width: 80%;
 }
 
+.close-icon-container {
+    display: flex;
+    justify-content: end;
+}
+
 .handle{
     font-size: 12px;
     font-weight: 500;
@@ -124,6 +129,7 @@ button{
     border: 1px solid lightgray;
     border-radius: 50%;
     width: 48px;
+    margin-top: 10px;
 }
 
 /* utility */

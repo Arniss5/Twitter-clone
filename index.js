@@ -11,9 +11,14 @@ document.addEventListener('click', function(e){
     else if(e.target.dataset.reply){
         handleReplyClick(e.target.dataset.reply)
     }
+    else if(e.target.dataset.delete) {
+        handleDeleteClick(e.target.dataset.delete)
+    }
+
     else if(e.target.id === 'tweet-btn'){
         handleTweetBtnClick()
     }
+    
 })
  
 function handleLikeClick(tweetId){ 
@@ -48,6 +53,16 @@ function handleRetweetClick(tweetId){
 
 function handleReplyClick(replyId){
     document.getElementById(`replies-${replyId}`).classList.toggle('hidden')
+}
+
+function handleDeleteClick(deleteId) {
+    const targetTweetObj = tweetsData.filter(function(tweet){
+        return tweet.uuid === deleteId
+    })[0]
+    const index = tweetsData.indexOf(targetTweetObj)
+
+    tweetsData.splice(index, 1)
+    render()
 }
 
 function handleTweetBtnClick(){
@@ -134,9 +149,11 @@ function getFeedHtml(){
                     ${tweet.retweets}
                 </span>
             </div>   
-        </div>            
+        </div> 
+        <div class="close-icon-container">${tweet.handle === "@Scrimba"? `<i class="fa-solid fa-xmark" data-delete=${tweet.uuid}></i></i>` : ""}</div>           
     </div>
     <div class="hidden" id="replies-${tweet.uuid}">
+        
         ${repliesHtml}
     </div>   
 </div>
