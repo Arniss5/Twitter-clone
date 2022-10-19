@@ -1,5 +1,15 @@
-import { tweetsData } from './data.js'
+import { tweetsDataFile } from './data.js'
 import { v4 as uuidv4 } from 'https://jspm.dev/uuid';
+
+
+let tweetsData
+
+if (localStorage.getItem('tweets') === null) {
+    tweetsData = tweetsDataFile;
+} else {
+    tweetsData = JSON.parse(localStorage.getItem('tweets'))
+};
+
 
 document.addEventListener('click', function(e){
     if(e.target.dataset.like){
@@ -24,6 +34,10 @@ document.addEventListener('click', function(e){
 
     
 })
+
+function saveStorage(){
+    localStorage.setItem('tweets', JSON.stringify(tweetsData))
+}
  
 function handleLikeClick(tweetId){ 
     const targetTweetObj = tweetsData.filter(function(tweet){
@@ -37,6 +51,7 @@ function handleLikeClick(tweetId){
         targetTweetObj.likes++ 
     }
     targetTweetObj.isLiked = !targetTweetObj.isLiked
+    // saveStorage()
     render()
 }
 
@@ -84,7 +99,7 @@ function handleSubmitReplyClick(replySubmitId, replyDataset) {
     //add reply to the tweet reply array
     tweetsData.forEach(function(tweet) {
         if (tweet.uuid === replyDataset) {
-            tweet.replies.push(
+            tweet.replies.unshift(
                 {
                     handle: "@Scrimba",
                     profilePic: `images/scrimbalogo.png`,
@@ -199,6 +214,7 @@ function getFeedHtml(){
 }
 
 function render(){
+    saveStorage()
     document.getElementById('feed').innerHTML = getFeedHtml()
 }
 

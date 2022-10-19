@@ -1,4 +1,4 @@
-export const tweetsData = [   
+export const tweetsDataFile = [   
     {
         handle: `@TrollBot66756542 💎`,
         profilePic: `images/troll.jpg`,
