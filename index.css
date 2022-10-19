@@ -58,15 +58,17 @@ textarea{
     font-size: 20px;
     line-height: 30px;
 }
-
-button{
+button {
     background-color: #1DA1F2;
     border: none;
     color: white;
-    padding: 10px 19px;
-    border-radius: 20px;
-    width: 100%; 
     cursor: pointer;
+}
+
+.tweet-btn{
+    border-radius: 20px;
+    padding: 10px 19px;
+    width: 100%; 
     font-size: 20px;
     font-weight: 600;
 }
@@ -121,6 +123,22 @@ button{
     width: 207px;
     font-size: 14px;
     line-height: 20px;
+}
+
+/* replies */
+.reply-input-container {
+    margin: 10px 0 10px 20px;
+}
+
+.reply-input {
+    height: 30px;
+    border: 1px solid #999;
+}
+
+.reply-btn {
+    height: 30px;
+    padding: 3px 7px;
+    border-radius: 5px;
 }
 
 /* images */

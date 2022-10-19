@@ -14,10 +14,14 @@ document.addEventListener('click', function(e){
     else if(e.target.dataset.delete) {
         handleDeleteClick(e.target.dataset.delete)
     }
+    else if(e.target.dataset.submitreply) {
+        handleSubmitReplyClick(e.target.id, e.target.dataset.submitreply)
+    }
 
     else if(e.target.id === 'tweet-btn'){
         handleTweetBtnClick()
     }
+
     
 })
  
@@ -63,6 +67,35 @@ function handleDeleteClick(deleteId) {
 
     tweetsData.splice(index, 1)
     render()
+}
+
+function handleSubmitReplyClick(replySubmitId, replyDataset) {
+    //get the button and input
+    const replySubmit = document.getElementById(replySubmitId)
+    const replyInputs = document.querySelectorAll(".reply-input")
+    
+    //get the required input
+    const currentInput = Array.from(replyInputs).filter(input => {
+        if(input.id === `reply-input-${replyDataset}`){
+            return input
+        }
+    })[0]
+
+    //add reply to the tweet reply array
+    tweetsData.forEach(function(tweet) {
+        if (tweet.uuid === replyDataset) {
+            tweet.replies.push(
+                {
+                    handle: "@Scrimba",
+                    profilePic: `images/scrimbalogo.png`,
+                    tweetText: currentInput.value
+                }
+            )
+        }
+    })
+    render()
+    //keep the replies open
+    document.getElementById(`replies-${replyDataset}`).classList.toggle('hidden')
 }
 
 function handleTweetBtnClick(){
@@ -153,7 +186,10 @@ function getFeedHtml(){
         <div class="close-icon-container">${tweet.handle === "@Scrimba"? `<i class="fa-solid fa-xmark" data-delete=${tweet.uuid}></i></i>` : ""}</div>           
     </div>
     <div class="hidden" id="replies-${tweet.uuid}">
-        
+        <div class="reply-input-container">
+            <input type="text" placeholder="Type reply here" class="reply-input" id="reply-input-${tweet.uuid}"></Input>
+            <button class="reply-btn" data-submitreply=${tweet.uuid} id="reply-submit-${tweet.uuid}">Reply</button>
+        </div>
         ${repliesHtml}
     </div>   
 </div>
